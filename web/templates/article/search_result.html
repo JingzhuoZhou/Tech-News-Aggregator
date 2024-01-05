@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ category }}
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        <!-- 计时 -->
+        <p>搜索用时：{{cost}}秒</p>
+        <!-- 结果列表 -->
+        {% for article in articles %}
+        <div class="col-3 mb-5">
+            <div class="card h-100">
+                <h4 class="card-header" style="background-color: aliceblue;">
+                    <a class="btn btn-light" style="background-color: aliceblue;" href={% url 'article:article_page' article.id %}>{{ article.title }}</a>
+                </h4> 
+                <div class="card-body">
+                    <p class="card-text">{{ article.brief }}...</p>
+                </div>
+                <div class="card-footer" style="background-color: aliceblue;">
+                    <a>作者：{{ article.author }}<br></a> 
+                    <a>时间：{{ article.date }}<br></a>
+                    <a>阅读量：{{ article.like }}<br></a>  
+                    <a>评论数：{{article.comment_num}}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<!-- 分页 -->
+<div class="container">
+    <div class="row">
+        <div class="col-7">
+            <div style="float: right;">
+                <span class="step-links">
+                    {% if articles.has_previous %}
+                        <a href="{{ href }}1" class="btn btn-success">
+                            &laquo; 1
+                        </a>
+                        <span>...</span>
+                        <a href="{{ href }}{{ articles.previous_page_number }}" 
+                        class="btn btn-secondary"
+                        >
+                            {{ articles.previous_page_number }}
+                        </a>
+                    {% endif %}
+
+                    <span class="current btn btn-primary btn-lg">
+                        {{ articles.number }}
+                    </span>
+
+                    {% if articles.has_next %}
+                        <a href="{{ href }}{{ articles.next_page_number }}"
+                           class="btn btn-secondary"
+                        >
+                            {{ articles.next_page_number }}
+                        </a>
+                        <span>...</span>
+                        <a href="{{ href }}{{ articles.paginator.num_pages }}"
+                            class="btn btn-success"
+                        >
+                            {{ articles.paginator.num_pages }} &raquo;
+                        </a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        <!-- 输入跳转：添加隐藏输入框发送get请求 -->
+        <div class="col-1">
+            <form class="bs-example bs-example-form" role="form">
+                <input type="hidden" name="word" value="{{ word }}">
+                <input type="hidden" name="order" value="{{ order }}">
+                <input type="hidden" name="August" value="{{ August }}">
+                <input type="hidden" name="July" value="{{ July }}">
+                <input type="hidden" name="June" value="{{ June }}">
+                <input type="hidden" name="May" value="{{ May }}">
+                <input type="hidden" name="April" value="{{ April }}">
+                <input type="text" class="form-control" name="page" style="width: 75%;height: 90%;">
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+{% endblock content %}

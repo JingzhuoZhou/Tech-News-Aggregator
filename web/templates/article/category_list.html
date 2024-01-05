@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    新闻分类
+{% endblock title %}
+
+{% block content %}
+<!-- 卡片式分类列表 -->
+<div class="container">
+    <div class="row mt-5 mb-5 gap-3 justify-content-center">
+        {% for category in categories %}
+        
+        <div class="col-4 mb-5">
+            <div class="text-center">
+                <div class="card w-75 h-100" style="background-color: aliceblue;">
+                    <br>
+                    <h4 class="card-body justify-content-center" >
+                        <a class="btn btn-light" style="background-color: aliceblue;" href={%url 'article:category' category.name %}>{{ category.name }}（{{category.num}}）</a>
+                    </h4>
+                    <br>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+</div>
+{% endblock content %}
